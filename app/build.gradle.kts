@@ -5,16 +5,13 @@ plugins {
 
 android {
     namespace = "br.com.wesleyleocadio.colaboradoresapp"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "br.com.wesleyleocadio.colaboradoresapp"
         minSdk = 24
-        targetSdk = 36
+        //noinspection OldTargetApi
+        targetSdk = 37
         versionCode = 1
         versionName = "1.0"
 
