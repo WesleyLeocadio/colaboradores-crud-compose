@@ -11,7 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import br.com.wesleyleocadio.colaboradoresapp.ui.telas.ColaboradoresScreen
 import br.com.wesleyleocadio.colaboradoresapp.ui.theme.ColaboradoresAppTheme
+import br.com.wesleyleocadio.colaboradoresapp.viewmodel.ColaboradorViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,12 +21,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ColaboradoresAppTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                val viewModel = ColaboradorViewModel()
+                ColaboradoresScreen(viewModel)
             }
         }
     }
@@ -42,6 +40,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     ColaboradoresAppTheme {
-        Greeting("Android")
+        val viewModel = ColaboradorViewModel()
+        ColaboradoresScreen(viewModel)
     }
 }
