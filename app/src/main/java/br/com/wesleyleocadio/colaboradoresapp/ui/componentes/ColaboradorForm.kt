@@ -21,6 +21,8 @@ fun ColaboradorForm(
     var nivel by remember { mutableStateOf(Nivel.SUPORTE) }
 
 
+    var mensagemErro by remember { mutableStateOf<String?>(null) }
+
     var expanded by remember { mutableStateOf(false) }
 
 
@@ -37,13 +39,13 @@ fun ColaboradorForm(
     }
 
 
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column(modifier = Modifier.safeDrawingPadding().padding(16.dp)) {
 
         OutlinedTextField(
             value = nome,
             onValueChange = { nome = it },
             label = { Text("Nome") },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -93,18 +95,28 @@ fun ColaboradorForm(
                 texto = "Cadastrar",
                 corFundo = MaterialTheme.colorScheme.primary,
                 onClick = {
-                    if (nome.isNotBlank() && email.isNotBlank()) {
-                        onSalvar(
-                            Colaborador(
-                                id = System.currentTimeMillis().toInt(),
-                                nome = nome,
-                                email = email,
-                                nivel = nivel
+
+                    when {
+                        nome.isBlank() -> {
+                            mensagemErro = "O nome é obrigatório"
+                        }
+                        email.isBlank() || !email.contains("@") -> {
+                            mensagemErro = "E-mail inválido"
+                        }
+                        else -> {
+                            onSalvar(
+                                Colaborador(
+                                    id = System.currentTimeMillis().toInt(),
+                                    nome = nome,
+                                    email = email,
+                                    nivel = nivel
+                                )
                             )
-                        )
-                        nome = ""
-                        email = ""
+                            nome = ""
+                            email = ""
+                        }
                     }
+
                 },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -120,17 +132,27 @@ fun ColaboradorForm(
                     texto = "Alterar",
                     corFundo = MaterialTheme.colorScheme.primary,
                     onClick = {
-                        onSalvar(
-                            colaboradorSelecionado.copy(
-                                nome = nome,
-                                email = email,
-                                nivel = nivel
-                            )
-                        )
-                        nome = ""
-                        email = ""
-                        nivel = Nivel.SUPORTE
 
+                        when {
+                            nome.isBlank() -> {
+                                mensagemErro = "O nome é obrigatório"
+                            }
+                            email.isBlank() || !email.contains("@") -> {
+                                mensagemErro = "E-mail inválido"
+                            }
+                            else -> {
+                                onSalvar(
+                                    colaboradorSelecionado.copy(
+                                        nome = nome,
+                                        email = email,
+                                        nivel = nivel
+                                    )
+                                )
+                                nome = ""
+                                email = ""
+                                nivel = Nivel.SUPORTE
+                            }
+                        }
                     }
                 )
 
@@ -150,6 +172,30 @@ fun ColaboradorForm(
             }
         }
 
+        mensagemErro?.let {
+            AlertDialog(
+                onDismissRequest = { mensagemErro = null },
+                confirmButton = {
+                    TextButton(onClick = { mensagemErro = null }) {
+                        Text("OK")
+                    }
+                },
+                title = { Text("Atenção") },
+                text = { Text(it) }
+            )
+        }
+
     }
 
+    fun validar(): String? {
+        return when {
+            nome.isBlank() -> "O nome é obrigatório"
+            email.isBlank() || !email.contains("@") -> "E-mail inválido"
+            else -> null
+        }
+    }
 }
+
+
+
+
