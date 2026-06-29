@@ -36,6 +36,9 @@ fun ColaboradoresScreen(viewModel: ColaboradorViewModel) {
             onExcluir = { colaborador ->
                 viewModel.remover(colaborador)
                 selecionado = null
+            },
+            onCancelar = {
+                selecionado = null
             }
 
         )

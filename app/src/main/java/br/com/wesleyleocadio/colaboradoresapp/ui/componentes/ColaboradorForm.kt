@@ -13,7 +13,8 @@ import br.com.wesleyleocadio.colaboradoresapp.model.Nivel
 fun ColaboradorForm(
     onSalvar: (Colaborador) -> Unit,
     colaboradorSelecionado: Colaborador?,
-    onExcluir: (Colaborador) -> Unit
+    onExcluir: (Colaborador) -> Unit,
+    onCancelar: () -> Unit
 ) {
 
     var nome by remember { mutableStateOf("") }
@@ -167,6 +168,18 @@ fun ColaboradorForm(
 
                     },
 
+                )
+
+                Botao(
+                    texto = "Cancelar",
+                    corFundo = MaterialTheme.colorScheme.secondary,
+                    onClick = {
+                        nome = ""
+                        email = ""
+                        nivel = Nivel.SUPORTE
+
+                        onCancelar() // 👈 AQUI
+                    }
                 )
 
             }
