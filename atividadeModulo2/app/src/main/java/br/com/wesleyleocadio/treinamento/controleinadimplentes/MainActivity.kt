@@ -12,20 +12,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import br.com.wesleyleocadio.treinamento.controleinadimplentes.ui.theme.ControleInadimplentesTheme
+import br.com.wesleyleocadio.treinamento.controleinadimplentes.view.ProjetoAcademia
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ControleInadimplentesTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
+            ProjetoAcademia()
+
         }
     }
 }
