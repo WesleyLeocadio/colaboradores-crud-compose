@@ -1,5 +1,6 @@
 package br.com.wesleyleocadio.treinamento.controleinadimplentes.view
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,6 +25,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import br.com.wesleyleocadio.treinamento.controleinadimplentes.model.AlunoRepository
+import br.com.wesleyleocadio.treinamento.controleinadimplentes.navigation.Rotas
 
 @Composable
 fun HomeScreen(
@@ -54,7 +56,10 @@ fun HomeScreen(
             titulo = "Inadimplentes",
             valor = totalInadimplentes.toString(),
             icone = Icons.Default.Warning,
-            cor = Color(0xFFFFF3E0)
+            cor = Color(0xFFFFF3E0),
+            acao = {
+                navController.navigate(Rotas.INADIMPLENTES)
+            }
         )
 
         CardIndicador(
@@ -71,11 +76,12 @@ fun CardIndicador(
     titulo: String,
     valor: String,
     icone: ImageVector,
-    cor: Color
+    cor: Color,
+    acao: (() -> Unit)? = null
 ) {
 
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().clickable{acao?.invoke()},
         colors = CardDefaults.cardColors(
             containerColor = cor
         ),
