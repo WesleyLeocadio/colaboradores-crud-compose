@@ -11,7 +11,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
+import br.com.wesleyleocadio.treinamento.alunocrud.data.local.AppDatabase
+import br.com.wesleyleocadio.treinamento.alunocrud.data.repository.AlunoRepositoryImpl
 import br.com.wesleyleocadio.treinamento.alunocrud.ui.theme.AlunoCRUDTheme
+import br.com.wesleyleocadio.treinamento.alunocrud.view.AlunoScreen
+import br.com.wesleyleocadio.treinamento.alunocrud.viewmodel.AlunoViewModel
+import br.com.wesleyleocadio.treinamento.alunocrud.viewmodel.AlunoViewModelFactory
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,12 +25,17 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AlunoCRUDTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                val database = AppDatabase.getDatabase(this)
+                val repository =
+                    AlunoRepositoryImpl(
+                            database.alunoDao()
+                )
+
+                val viewModel: AlunoViewModel = viewModel (
+                            factory = AlunoViewModelFactory(repository)
+                )
+
+                AlunoScreen(viewModel)
             }
         }
     }
