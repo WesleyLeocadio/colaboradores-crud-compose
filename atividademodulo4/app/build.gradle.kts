@@ -5,16 +5,12 @@ plugins {
 
 android {
     namespace = "br.com.wesleyleocadio.treinamento.atividademodulo4"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "br.com.wesleyleocadio.treinamento.atividademodulo4"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 1
         versionName = "1.0"
 
@@ -48,6 +44,15 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+    // Viewmodel (MVVM)
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.4")
+    // Retrofit + Gson (consumo da PokéAPI)
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    // Coroutines (chamadas assíncronas)
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
+    // Coil (Coroutine Image Loader - Carregar imagens vindas de uma API)
+    implementation("io.coil-kt:coil-compose:2.6.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
